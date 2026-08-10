@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>正在播放</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}
+body{
+  background:#1a1a22;
+  color:#fff;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.box{text-align:center;}
+h2{margin-bottom:24px;}
+.tip{color:#aaa;font-size:14px;margin-bottom:20px;}
+button{
+  padding:14px 32px;
+  font-size:17px;
+  border:none;
+  border-radius:999px;
+  background:#4080ff;
+  color:white;
+}
+button:active{background:#2962d8;}
+audio{margin-top:24px;width:100%;max-width:360px;}
+.back{
+  margin-top:30px;
+  color:#88aaff;
+  text-decoration:none;
+}
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>🎶 NFC音乐</h2>
+  <p class="tip">浏览器限制：请点击按钮开始播放</p>
+  <button id="playBtn">点击播放</button>
+  <audio id="audioPlayer" controls>
+  <br>
+  <a class="back" href="./index.html">← 返回乐曲库</a>
+</div>
+
+<script>
+// 获取url参数 ?song=x
+const urlParams = new URLSearchParams(window.location.search);
+const songId = urlParams.get('song');
+
+// 音频映射，新增歌曲在这里加一行
+const songMap = {
+  "1":"./audio/1.mp3",
+  "2":"./audio/2.mp3",
+  "3":"./audio/3.mp3"
+};
+
+const audio = document.getElementById('audioPlayer');
+const btn = document.getElementById('playBtn');
+
+if(songMap[songId]){
+  audio.src = songMap[songId];
+}else{
+  alert("没有找到该曲目，返回首页");
+  window.location.href="./index.html";
+}
+
+btn.addEventListener("click",()=>{
+  audio.play().catch(e=>console.log("播放失败",e));
+});
+</script>
+</body>
+</html>
